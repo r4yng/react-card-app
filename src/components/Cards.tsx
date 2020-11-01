@@ -22,10 +22,11 @@ class CardsComponent extends React.Component<IProps, IState> {
     try {
       const url =
         this.state.nextUrl ||
-        "https://api.elderscrollslegends.io/v1/cards?pageSize=20";
+        "https://api.elderscrollslegends.io/v1/cards?pageSize=100";
       const {
         data: { cards, _links },
       } = await axios.get<APIResponse>(url);
+
       // set card data from response
       const items = cards.map(({ name, text, imageUrl, type, set }) => ({
         name,
@@ -53,7 +54,7 @@ class CardsComponent extends React.Component<IProps, IState> {
     const filteredItems =
       filter.trim() === ""
         ? items
-        : items.filter((item) => item.name.includes(filter));
+        : items.filter(({ name }) => new RegExp(`${filter}`, "i").test(name));
     let noFilteredItems;
     if (filteredItems.length === 0) {
       noFilteredItems = <div>No Names Found</div>;
@@ -61,48 +62,47 @@ class CardsComponent extends React.Component<IProps, IState> {
 
     if (error) {
       return <div>Error: {error}</div>;
-    } else {
-      return (
-        <>
-          <Form.Control
-            className="mb-2 mr-sm-2"
-            id="searchInput"
-            placeholder="Search Name"
-            value={filter}
-            onChange={this.handleChange}
-          />
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={this.loadCards}
-            hasMore={hasMoreItems && filter === ""}
-            loader={
-              <div className="loader" key={0}>
-                Loading...
-              </div>
-            }
-          >
-            <div className="card-container">
-              {filteredItems.map((item, index) => (
-                <Card key={index}>
-                  <Card.Img
-                    variant="top"
-                    src={item.imageUrl}
-                    style={{ maxWidth: "200px" }}
-                  />
-                  <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
-                    <Card.Text>Text: {item.text}</Card.Text>
-                    <Card.Text>Set: {item.setName}</Card.Text>
-                    <Card.Text>Type: {item.type}</Card.Text>
-                  </Card.Body>
-                </Card>
-              ))}
-              {noFilteredItems}
-            </div>
-          </InfiniteScroll>
-        </>
-      );
     }
+    return (
+      <>
+        <Form.Control
+          className="mb-2 mr-sm-2"
+          id="searchInput"
+          placeholder="Search Name"
+          value={filter}
+          onChange={this.handleChange}
+        />
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={this.loadCards}
+          hasMore={hasMoreItems && filter === ""}
+          loader={
+            <div className="loader" key={0}>
+              Loading...
+            </div>
+          }
+        >
+          <div className="card-container">
+            {filteredItems.map((item, index) => (
+              <Card key={index}>
+                <Card.Img
+                  variant="top"
+                  src={item.imageUrl}
+                  style={{ maxWidth: "200px" }}
+                />
+                <Card.Body>
+                  <Card.Title>{item.name}</Card.Title>
+                  <Card.Text>Text: {item.text}</Card.Text>
+                  <Card.Text>Set: {item.setName}</Card.Text>
+                  <Card.Text>Type: {item.type}</Card.Text>
+                </Card.Body>
+              </Card>
+            ))}
+            {noFilteredItems}
+          </div>
+        </InfiniteScroll>
+      </>
+    );
   }
 }
 
