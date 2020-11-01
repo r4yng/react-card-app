@@ -44,3 +44,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## More
+
+This project was created with create-react-app using Typescript. 
+
+Other libraries used: axios for HTTP client, react-bootstrap for the card and form control, react-infinite-scroller for infinite scroll functionality
+
+It is built and deployed on Github Pages at https://r4yng.github.io/react-card-app.
