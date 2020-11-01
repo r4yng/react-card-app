@@ -22,7 +22,7 @@ class CardsComponent extends React.Component<IProps, IState> {
     try {
       const url =
         this.state.nextUrl ||
-        "https://api.elderscrollslegends.io/v1/cards?pageSize=100";
+        "https://api.elderscrollslegends.io/v1/cards?pageSize=20";
       const {
         data: { cards, _links },
       } = await axios.get<APIResponse>(url);
