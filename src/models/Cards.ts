@@ -1,9 +1,11 @@
 export interface IProps {}
 
 export interface IState {
+  filter: string;
   error: string | null;
-  isLoaded: boolean;
   items: ICard[];
+  nextUrl: string | null;
+  hasMoreItems: boolean;
 }
 
 export interface ICard {
