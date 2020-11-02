@@ -22,11 +22,14 @@ class CardsComponent extends React.Component<IProps, IState> {
   loadCards = async () => {
     try {
       const url =
-        this.state.nextUrl ||
-        "https://api.elderscrollslegends.io/v1/cards?pageSize=20";
+        this.state.nextUrl || (process.env.REACT_APP_BASE_URL as string);
+      let params;
+      if (!this.state.nextUrl) {
+        params = { params: { pageSize: 20 } };
+      }
       const {
         data: { cards, _links },
-      } = await axios.get<APIResponse>(url);
+      } = await axios.get<APIResponse>(url, params);
 
       // set card data from response
       const items = cards.map(({ name, text, imageUrl, type, set }) => ({
