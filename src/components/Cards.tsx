@@ -1,10 +1,11 @@
 import React from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
-import { Card, Form } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { APIResponse } from "../models/APIResponse";
 import { IProps, IState } from "../models/Cards";
 import "./Cards.css";
+import { SearchBar } from "./SearchBar";
 
 class CardsComponent extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -45,18 +46,18 @@ class CardsComponent extends React.Component<IProps, IState> {
     }
   };
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ filter: event.target.value });
   };
 
   render() {
-    const { filter, error, items, hasMoreItems } = this.state;
+    const { filter, error, items, nextUrl, hasMoreItems } = this.state;
     const filteredItems =
       filter.trim() === ""
         ? items
         : items.filter(({ name }) => new RegExp(`${filter}`, "i").test(name));
     let noFilteredItems;
-    if (filteredItems.length === 0) {
+    if (filteredItems.length === 0 && nextUrl) {
       noFilteredItems = <div>No Names Found</div>;
     }
 
@@ -65,13 +66,7 @@ class CardsComponent extends React.Component<IProps, IState> {
     }
     return (
       <>
-        <Form.Control
-          className="mb-2 mr-sm-2"
-          id="searchInput"
-          placeholder="Search Name"
-          value={filter}
-          onChange={this.handleChange}
-        />
+        <SearchBar filterText={filter} onChange={this.handleFilterChange}></SearchBar>
         <InfiniteScroll
           pageStart={0}
           loadMore={this.loadCards}
