@@ -21,7 +21,7 @@ class CardsComponent extends React.Component<Props, State> {
   state = {
     filter: "",
     error: null,
-    items: [],
+    items: [] as ICard[],
     nextUrl: null,
     hasMoreItems: true,
   };
@@ -46,11 +46,11 @@ class CardsComponent extends React.Component<Props, State> {
         type,
         setName: set.name,
       }));
-      this.setState({
-        items: [...this.state.items, ...items],
+      this.setState((previousState) => ({
+        items: [...previousState.items, ...items],
         nextUrl: _links.next,
         hasMoreItems: _links.next !== undefined,
-      });
+      }));
     } catch (error) {
       this.setState({ error });
     }
