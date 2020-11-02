@@ -2,11 +2,11 @@ import React from "react";
 import { Card as BsCard } from "react-bootstrap";
 import { ICard } from "../models/Cards";
 
-interface CardProps {
+interface Props {
   data: ICard;
 }
 
-export const Card: React.FC<CardProps> = ({
+const Card: React.FC<Props> = ({
   data: { imageUrl, name, text, setName, type },
 }) => (
   <BsCard>
@@ -19,3 +19,5 @@ export const Card: React.FC<CardProps> = ({
     </BsCard.Body>
   </BsCard>
 );
+
+export default Card;

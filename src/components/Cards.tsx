@@ -2,22 +2,29 @@ import React from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
 import { APIResponse } from "../models/APIResponse";
-import { IProps, IState } from "../models/Cards";
+import { ICard } from "../models/Cards";
 import "./Cards.css";
-import { SearchBar } from "./SearchBar";
-import { Card } from "./Card";
+import SearchBar from "./SearchBar";
+import Card from "./Card";
 
-class CardsComponent extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      filter: "",
-      error: null,
-      items: [],
-      nextUrl: null,
-      hasMoreItems: true,
-    };
-  }
+interface Props {}
+
+interface State {
+  filter: string;
+  error: string | null;
+  items: ICard[];
+  nextUrl: string | null;
+  hasMoreItems: boolean;
+}
+
+class CardsComponent extends React.Component<Props, State> {
+  state = {
+    filter: "",
+    error: null,
+    items: [],
+    nextUrl: null,
+    hasMoreItems: true,
+  };
 
   loadCards = async () => {
     try {

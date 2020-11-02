@@ -6,7 +6,7 @@ interface Props {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const SearchBar: React.FC<Props> = ({ filterText, onChange }) => (
+const SearchBar: React.FC<Props> = ({ filterText, onChange }) => (
   <Form.Control
     className="mb-2 mr-sm-2"
     id="searchInput"
@@ -15,3 +15,5 @@ export const SearchBar: React.FC<Props> = ({ filterText, onChange }) => (
     onChange={onChange}
   />
 );
+
+export default SearchBar;
