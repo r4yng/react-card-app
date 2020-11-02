@@ -66,7 +66,10 @@ class CardsComponent extends React.Component<IProps, IState> {
     }
     return (
       <>
-        <SearchBar filterText={filter} onChange={this.handleFilterChange}></SearchBar>
+        <SearchBar
+          filterText={filter}
+          onChange={this.handleFilterChange}
+        ></SearchBar>
         <InfiniteScroll
           pageStart={0}
           loadMore={this.loadCards}
