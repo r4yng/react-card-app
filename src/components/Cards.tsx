@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
-import { Card } from "react-bootstrap";
 import { APIResponse } from "../models/APIResponse";
 import { IProps, IState } from "../models/Cards";
 import "./Cards.css";
 import { SearchBar } from "./SearchBar";
+import { Card } from "./Card";
 
 class CardsComponent extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -79,19 +79,7 @@ class CardsComponent extends React.Component<IProps, IState> {
         >
           <div className="card-container">
             {filteredItems.map((item, index) => (
-              <Card key={index}>
-                <Card.Img
-                  variant="top"
-                  src={item.imageUrl}
-                  style={{ maxWidth: "200px" }}
-                />
-                <Card.Body>
-                  <Card.Title>{item.name}</Card.Title>
-                  <Card.Text>Text: {item.text}</Card.Text>
-                  <Card.Text>Set: {item.setName}</Card.Text>
-                  <Card.Text>Type: {item.type}</Card.Text>
-                </Card.Body>
-              </Card>
+              <Card key={index} data={item} />
             ))}
             {noFilteredItems}
           </div>
